@@ -325,7 +325,7 @@ def z1LinienGS(Level,w,rhs):
 def Prolong_matrix(idx_H,idx_h,Punkte_unbekannt_h,Punkte_unbekannt_H):
     """
     Die bilineare Prolongation wird als lil_matrix aus Effizienzgründen gebaut. 
-    Die Restriktion ergibt sich aus R = 1/4*P. 
+    Die Restriktion ergibt sich aus R = 1/4*P^T. 
     """
     n_h = np.max(idx_h)+1 
     n_H = np.max(idx_H)+1
@@ -448,7 +448,7 @@ def V_Zyklus(Level,l,w,b,nu1,nu2):
 def CN_Zeitschleife_MG(w0,Level,N_tau,dtau,A,B,C,D,rho,S1_0,S2_0,sigma_1,sigma_2,a_1,a_2,b_param,K,r,q_1,q_2,k_max,nu1,nu2,eps):
     """
     V-Zyklus eingebettet in der CN Zeitschleife.
-    Löst in jedem Zeitschritt das LGS A_h*w^n+1 = B_h + 0.5*dtau(g^n + g^n+1) iterativ mit dem V-Zyklus,
+    Löst in jedem Zeitschritt das LGS A_h*w^n+1 = B_h*w^n+ 0.5*dtau(g^n + g^n+1) iterativ mit dem V-Zyklus,
     bis die Norm des Residums die Toleranz eps relativ zum Startresiduum unterschreitet und zählt die benötigten V-Zyklen pro Zeitschritt.
     """
     A_h = Level[0]["A_h"]
@@ -575,13 +575,13 @@ def h_unabh(A,B,C,D,rho,N_tau,T,N_liste,n_zyklus,nu1,nu2):
 
 #BENCHOP Test mit rho = 0.5 
 Test_1 = Benchmark_test(A=-5,B=5,C=-5,D=5,sigma_1=0.15,sigma_2=0.15,rho=0.5,r=0.03,q_1=0.0,q_2=0.0,K=0.0,T=1.0,N_liste=(32,64,128,256,512),N_tau=8,k_max=50,nu1=1,nu2=1,eps=1e-5)
-print(Test_1)
+
 
 
 
 #Erweiterter Test mit rho = 0.9
 Test_2 = Benchmark_test(A=-5,B=5,C=-5,D=5,sigma_1=0.15,sigma_2=0.15,rho=0.9,r=0.03,q_1=0.0,q_2=0.0,K=0.0,T=1.0,N_liste=(32,64,128,256,512),N_tau=8,k_max=50,nu1=1,nu2=1,eps=1e-5)
-print(Test_2)
+
 
 
 
